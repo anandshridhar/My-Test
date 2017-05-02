@@ -1,61 +1,23 @@
-var list = [5, 4, 8, 9, 0, 2, 17, 44, 65];
-var newlist = [];
-function setup() {
+
+
+function setup(){
   createCanvas(640, 480);
-  newlist = quicksort(list);
+
+}
+function tree(x1, y1, angle, iterations){
+  if (iterations !== 0){
+    var x2 = x1 + (cos(angle) * iterations * 3);
+    var y2 = y1 + (sin(angle) * iterations * 3);
+    var weight = iterations;
+    stroke(0);
+    strokeWeight(weight);
+    line(x1, y1, x2, y2);
+    tree(x2, y2, angle - PI/8, iterations - 1);
+    tree(x2, y2, angle + PI/8, iterations - 1);
+  }
 }
 
-function findsmallest(list){
-  var smallest = 0;
-  var smallest_index = 0;
-  for(var i=0; i<= list.length; i++){
-    if (list[i] < smallest){
-      smallest = list[i];
-      smallest_index = i;
-    }
-  }
-  return smallest_index;
-}
-function selection_sort(list){
-  var newlist = [];
-  for(var k=0; k<=list.length; k++){
-    var smallest = findsmallest(list);
-    newlist.push(list.splice(smallest,1));  
-    return newlist;
- 
-  }
-}
-function sumlist(list){
-  if (list.length == 1){
-    return list[0];
-  } else {
-    return (list.pop() + sumlist(list));
-  }
-}
-function quicksort(list){
-  var pivot = [];
-  var less = [];
-  var more = [];
-  if (list.length < 2){
-    return list
-  } else {
-      
-      pivot.push(list[0]);
-      
-     
-      for(i=0; i<=list.length; i++){
-        if(list[i] <= pivot){
-          less.push(list[i]);
-        }
-        if(list[i] > pivot){
-          more.push(list[i]);        
-        }
-      }
-      return quicksort(less).push(pivot).push(quicksort(more));
-    }
-  }
-
-function draw() {
-  background(100);
-  text(newlist, width/2, height/2);
+function draw(){
+  
+  tree(width/2, height * 0.75, -PI/2, 5);
 }
